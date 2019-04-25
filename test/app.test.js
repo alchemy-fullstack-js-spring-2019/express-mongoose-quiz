@@ -88,4 +88,18 @@ describe('color routes', () => {
         });
       });
   });
+
+  it('Deletes color by ID', () => {
+    return createColor()
+      .then(color => {
+        return Promise.all([
+          Promise.resolve(color._id.toString()),
+          request(app)
+            .delete(`/api/v1/colors/${color._id}`)
+        ]);
+      })
+      .then(([_id, res]) => {
+        expect(res.body).toEqual({ _id });
+      });
+  });
 });
