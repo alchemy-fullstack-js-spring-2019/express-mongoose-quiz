@@ -112,7 +112,7 @@ describe('color routes', () => {
       });
   });
 
-  it('can get a color by id', () => {
+  it('can delete a color by id', () => {
     return request(app)
       .post('/api/v1/colors')
       .send({
@@ -122,11 +122,16 @@ describe('color routes', () => {
         g: 255,
         b: 0
       })
-      .then(res => request(app).delete(`/api/v1/colors/${res.body._id}`))
-      .then(res => {
+      .then(res => Promise.all([
+        Promise.resolve(res.body._id),
+        request(app).delete(`/api/v1/colors/${res.body._id}`)
+      ]))
+      .then(([id, res]) => {
         expect(res.body).toEqual({
-          _id: expect.any(String),
+          _id: id,
         });
       });
   });
+
+
 });
