@@ -38,6 +38,27 @@ describe('color routes', () => {
           _id: expect.any(String)
         });
       });
+  });
 
+  it('gets all colors by id and name', () => {
+    return request(app)
+      .post('/api/v1/colors')
+      .send({
+        name: 'Fierce Tan',
+        hex: 'D2B48C',
+        red: 210,
+        green: 180,
+        blue: 140
+      })
+      .then(() => {
+        return request(app)
+          .get('/api/v1/colors');
+      })
+      .then(foundColor => {
+        expect(foundColor.body).toEqual([{
+          name: 'Fierce Tan',
+          _id: expect.any(String)
+        }]);
+      });
   });
 });
