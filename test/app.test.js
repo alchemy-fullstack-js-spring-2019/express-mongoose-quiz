@@ -80,5 +80,32 @@ describe('color routes', () => {
       });
   });
 
+  it('gets a color by id', () => {
+    return request(app)
+      .post('/api/v1/colors')
+      .send({
+        name: 'blue',
+        hex: '#0000FF',
+        red: 0,
+        green: 0,
+        blue: 255
+      })
+      .then(color => {
+        return request(app)
+          .get(`/api/v1/colors/${color.body._id}`)
+          .then(res => {
+            expect(res.body).toEqual({
+              name: 'blue',
+              hex: '#0000FF',
+              red: 0,
+              green: 0,
+              blue: 255,
+              _id: color.body._id
+            });
+          });
+      });
+
+  });
+
 
 });
