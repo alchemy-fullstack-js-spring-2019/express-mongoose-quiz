@@ -3,6 +3,7 @@ const mongoose = require('mongoose');
 const request = require('supertest');
 const connect = require('../lib/utils/connect');
 const app = require('../lib/app');
+const Color = require('../lib/models/Color');
 
 describe('color routes', () => {
   beforeAll(() => {
@@ -17,5 +18,65 @@ describe('color routes', () => {
     return mongoose.connection.close();
   });
 
-  it('add your tests', () => { });
+  it('creates a color', () => { 
+    return request(app)
+      .post('/api/v1/colors')
+      .send({
+        name: 'black',
+        hex: '000000',
+        red: 0,
+        green: 0,
+        blue: 0
+      })
+      .then(res => {
+        expect(res.body).toEqual({
+          name: 'black',
+          hex: '000000',
+          red: 0,
+          green: 0,
+          blue: 0,
+          _id: expect.any(String)
+        });
+      });
+  });
+
+  it('gets a list of posts', () =>{
+    return Color
+      .create({
+        name: 'black',
+        hex: '000000',
+        red: 0,
+        green: 0,
+        blue: 0
+      })
+      .then(colorBlack => {
+        return Promise.all([
+          Promise.resolve(colorBlack),
+          Color
+            .create({
+              name: 'white',
+              hex: 'FFFFFF',
+              red: 255,
+              green: 255,
+              blue: 255
+            })
+        ]);
+      })
+      .then(([colorBlack, colorWhite]) => {
+        return request(app)
+          .get('/api/v1/colors')
+          .then(res => {
+            expect(res.body).toEqual([
+              {
+                id: expect.any(String),
+                name: 'black'
+              },
+              {
+                id: expect.any(String),
+                name: 'white'
+              }
+            ]);
+          });
+      });
+  });
 });
