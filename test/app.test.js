@@ -3,6 +3,7 @@ const mongoose = require('mongoose');
 const request = require('supertest');
 const connect = require('../lib/utils/connect');
 const app = require('../lib/app');
+const Color = require('../lib/models/Color');
 
 describe('color routes', () => {
   beforeAll(() => {
@@ -17,5 +18,25 @@ describe('color routes', () => {
     return mongoose.connection.close();
   });
 
-  it('add your tests', () => { });
+  it('can create a new color', () => {
+    return request(app)
+      .post('api/v1/colors')
+      .send({
+        name: 'black',
+        hex: 'FFFFFF',
+        red: 255,
+        green: 255,
+        blue: 255
+      })
+      .then(res => {
+        expect(res.body).toEqual({
+          name: 'black',
+          hex: 'FFFFFF',
+          red: 255,
+          green: 255,
+          blue: 255,
+          _id: expect.any(String)
+        });
+      });
+  });
 });
