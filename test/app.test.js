@@ -61,4 +61,30 @@ describe('color routes', () => {
         }]);
       });
   });
+
+  it('get a color by id', () => {
+    return request(app)
+      .post('/api/v1/colors')
+      .send({
+        name: 'Fierce Tan',
+        hex: 'D2B48C',
+        red: 210,
+        green: 180,
+        blue: 140
+      })
+      .then(createdColor => {
+        return request(app)
+          .get(`/api/v1/colors/${createdColor.body._id}`);
+      })
+      .then(returnedColor => {
+        expect(returnedColor.body).toEqual({
+          name: 'Fierce Tan',
+          hex: 'D2B48C',
+          red: 210,
+          green: 180,
+          blue: 140,
+          _id: expect.any(String)
+        });
+      });
+  });
 });
