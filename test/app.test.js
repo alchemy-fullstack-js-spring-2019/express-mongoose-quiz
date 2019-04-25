@@ -59,10 +59,6 @@ describe('color routes', () => {
         expect(res.body[0]).toEqual({ 
           _id: expect.any(String),
           name: expect.any(String),
-          hex: expect.any(String),
-          red: expect.any(Number),
-          green: expect.any(Number),
-          blue: expect.any(Number) 
         });
       });
   });
@@ -88,6 +84,29 @@ describe('color routes', () => {
           red: 224,
           green: 24,
           blue: 188,
+          _id: expect.any(String)
+        });
+      });
+  });
+
+  it('updates color name by id', () => {
+    return request(app)
+      .post('/api/v1/colors')
+      .send({
+        name: 'jaredsPersonalColor',
+        hex: '#E018BC',
+        red: 224,
+        green: 24,
+        blue: 188
+      })
+      .then(color => {
+        return request(app)
+          .patch(`/api/v1/colors/${color.body._id}`)
+          .send({ name: 'pattysColor' });
+      })
+      .then(res => {
+        expect(res.body).toEqual({
+          name: 'pattysColor',
           _id: expect.any(String)
         });
       });
