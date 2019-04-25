@@ -83,4 +83,29 @@ describe('color routes', () => {
         });
       });
   });
+
+  it('can patch a color by the id', () => {
+    return request(app)
+      .post('/api/v1/colors')
+      .send({
+        name: 'Red',
+        hex: '#FF0000',
+        red: 255,
+        green: 0,
+        blue: 0
+      })
+      .then(res => {
+        return request(app)
+          .patch(`/api/v1/colors/${res.body._id}`)
+          .send({
+            name: 'Special Red'
+          });
+      })
+      .then(res => {
+        expect(res.body).toEqual({
+          name: 'Special Red',
+          _id: expect.any(String)
+        });
+      });
+  });
 });
