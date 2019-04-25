@@ -3,8 +3,6 @@ const mongoose = require('mongoose');
 const request = require('supertest');
 const connect = require('../lib/utils/connect');
 const app = require('../lib/app');
-// const colorSchema = require('../lib/models/Color');
-
 
 describe('color routes', () => {
   beforeAll(() => {
@@ -27,8 +25,6 @@ describe('color routes', () => {
         blue: 22,
         red: 22,
         green: 22
-
-
       })
       .then(res => {
         expect(res.body).toEqual({
