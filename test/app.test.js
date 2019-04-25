@@ -117,7 +117,7 @@ describe('color routes', () => {
     })
       .then(createdColor => {
         return request(app)
-          .delete(`/api/v1/colors/${createdColor._id}`)
+          .delete(`/api/v1/colors/${createdColor._id}`);
       })
       .then(res => {
         expect(res.body).toEqual({
