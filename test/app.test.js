@@ -116,4 +116,23 @@ describe('color routes', () => {
         });
       });
   });
+  it('can delete by id', () => {
+    return Color
+      .create({
+        name: 'mint magic',
+        hex: '#54e5d4',
+        red: 84,
+        green: 229,
+        blue: 212
+      })
+      .then(createdColor => {
+        return request(app)
+          .delete(`/api/v1/colors/${createdColor._id}`);
+      })
+      .then(res => {
+        expect(res.body).toEqual({
+          _id: expect.any(String)
+        });
+      });
+  });
 });
