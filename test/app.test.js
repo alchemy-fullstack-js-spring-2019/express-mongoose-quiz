@@ -105,4 +105,22 @@ describe('color routes', () => {
           });
       });
   });
+  it('deletes a color, send colorname', () => {
+    return request(app)
+      .post('/api/v1/colors')
+      .send({
+        name: 'test5',
+        hex: 'def',
+        red: 1,
+        green: 1,
+        blue: 1
+      })
+      .then(created => {
+        return request(app)
+          .delete(`/api/v1/colors/${created.body._id}`)
+          .then(res => {
+            expect(res.body).toEqual({ _id: created.body._id });
+          });
+      });
+  });
 });
