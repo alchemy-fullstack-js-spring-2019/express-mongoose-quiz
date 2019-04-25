@@ -73,11 +73,7 @@ describe('color routes', () => {
       })
       .then(res => {
         expect(res.body).toEqual({
-          blue: 5,
-          green: 5,
-          hex: '333',
           name: 'black',
-          red: 5,
           _id: expect.any(String)
         });
       });
