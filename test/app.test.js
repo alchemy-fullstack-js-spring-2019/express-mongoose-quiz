@@ -85,4 +85,25 @@ describe('color routes', () => {
         });
       });
   });
+
+  it('updates a color by id', () => {
+    return Color.create({
+      name: 'Blue',
+      hex: '#4286f4',
+      red: 66,
+      green: 134, 
+      blue: 244
+    })
+      .then(createdColor => {
+        return request(app)
+          .patch(`/api/v1/colors/${createdColor._id}`)
+          .send({ name: 'blues clues' });
+      })
+      .then(res => {
+        expect(res.body).toEqual({
+          name: 'blues clues',
+          _id: expect.any(String)
+        });
+      });
+  });
 });
