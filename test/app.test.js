@@ -49,4 +49,21 @@ describe('color routes', () => {
         });
       });
   });
+
+  it('can get a list of colors', ()=> {
+    return Color.create({
+      name: 'mint magic',
+      hex: '#54e5d4',
+      red: 84,
+      green: 229,
+      blue: 212
+    })
+      .then(()=> {
+        return request(app)
+          .get('/api/v1/colors');
+      })
+      .then(res => {
+        expect(res.body).toHaveLength(1);
+      });
+  });
 });
