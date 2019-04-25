@@ -3,10 +3,15 @@ const mongoose = require('mongoose');
 const request = require('supertest');
 const connect = require('../lib/utils/connect');
 const app = require('../lib/app');
+const Color = require('../lib/models/Color');
 
 describe('color routes', () => {
   beforeAll(() => {
-    return connect();
+    return mongoose.connect('mongodb://localhost:27017/color', {
+      useFindAndModify: false,
+      useNewUrlParser: true,
+      useCreateIndex: true
+    });
   });
 
   beforeEach(() => {
@@ -17,5 +22,37 @@ describe('color routes', () => {
     return mongoose.connection.close();
   });
 
-  it('add your tests', () => { });
+  it('can create a new beautiful color', () => {
+    return request(app)
+      .post('/color')
+      .send({ name: 'lavender', hex: '967bb6', red: 59, green: 48, blue: 71 })
+      .then(res => {
+        expect(res.body).toEqual({
+          name: 'lavender',
+          hex: '967bb6',
+          red: 59,
+          green: 48,
+          blue: 71,
+          _id: expect.any(String),
+          __v: 0
+        });
+      });
+  });
+  it('gets a list of colors', () => {
+    return Color
+      .create({
+        name: 'lavender',
+        hex: '967bb6',
+        red: 59,
+        green: 48,
+        blue: 71,
+        _id: expect.any(String),
+        __v: 0
+      });
+  })
+  .then(createdColor => {
+    return request(app)
+    
+  })
+  
 });
