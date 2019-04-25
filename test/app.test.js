@@ -17,5 +17,53 @@ describe('color routes', () => {
     return mongoose.connection.close();
   });
 
-  it('add your tests', () => { });
+  it('creates a color', () => {
+    return request(app)
+      .post('/api/v1/colors')
+      .send({
+        name: 'jaredsPersonalColor',
+        hex: '#E018BC',
+        red: 224,
+        green: 24,
+        blue: 188
+      })
+      .then(res => {
+        expect(res.body).toEqual({
+          name: 'jaredsPersonalColor',
+          hex: '#E018BC',
+          red: 224,
+          green: 24,
+          blue: 188,
+          _id: expect.any(String),
+          __v: 0
+        });
+      });
+  });
+
+  it('gets a list of all colors', () => {
+    return request(app)
+      .post('/api/v1/colors')
+      .send({
+        name: 'jaredsPersonalColor',
+        hex: '#E018BC',
+        red: 224,
+        green: 24,
+        blue: 188
+      })
+      .then(() => {
+        return request(app)
+          .get('/api/v1/colors');
+      })
+      .then(res => {
+        expect(res.body).toHaveLength(1);
+        expect(res.body[0]).toEqual({ 
+          _id: expect.any(String),
+          name: expect.any(String),
+          hex: expect.any(String),
+          red: expect.any(Number),
+          green: expect.any(Number),
+          blue: expect.any(Number) 
+        });
+      });
+  });
 });
