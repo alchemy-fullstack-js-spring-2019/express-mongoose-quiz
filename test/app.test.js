@@ -87,7 +87,7 @@ describe('color routes', () => {
       });
   });
 
-  it.only('updates a color', () => {
+  it('updates a color', () => {
     return request(app)
       .post('/api/v1/colors')
       .send({
@@ -109,6 +109,7 @@ describe('color routes', () => {
           });
       })
       .then(updatedColor => {
+        console.log(updatedColor.body);
         expect(updatedColor.body).toEqual({
           _id: expect.any(String),
           name: 'even redder red',
@@ -131,7 +132,6 @@ describe('color routes', () => {
         blue: 0
       })
       .then(color => {
-        console.log(color.body._id);
         return Promise.all([
           Promise.resolve(color.body._id.toString()),
           request(app)
