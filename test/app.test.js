@@ -39,4 +39,25 @@ describe('color routes', () => {
         });
       });
   });
+
+  it('can get all the colors', () => {
+    return request(app)
+      .post('/api/v1/colors')
+      .send({
+        name: 'Red',
+        hex: '#FF0000',
+        red: 255,
+        green: 0,
+        blue: 0
+      })
+      .then(() => request(app).get('/api/v1/colors'))
+      .then(res => {
+        expect(res.body).toHaveLength(1);
+        expect(res.body).toEqual(expect.any(Array));
+        expect(res.body).toContainEqual({
+          name: 'Red',
+          _id: expect.any(String)
+        });
+      });
+  });
 });
