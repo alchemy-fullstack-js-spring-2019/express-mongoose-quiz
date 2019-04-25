@@ -40,4 +40,23 @@ describe('color routes', () => {
 
       });
   });
+
+  it('responds with a list of colors', () => {
+    return request(app)
+      .post('/api/v1/colors')
+      .send({
+        name: 'red',
+        hex: 'ff0000',
+        red: 255,
+        green: 0,
+        blue: 0
+      })
+      .then(() => {
+        return request(app)
+          .get('/api/v1/colors')
+          .then(colors => {
+            expect(colors.body).toHaveLength(1);
+          });
+      });
+  });
 });
