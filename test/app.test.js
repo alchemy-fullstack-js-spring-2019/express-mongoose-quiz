@@ -121,7 +121,6 @@ describe('color routes', () => {
           .patch(`/api/v1/colors/${color.body._id}`)
           .send({ name: 'royal blue' })
           .then(updatedColor => {
-            console.log('updated color', updatedColor.body);
             expect(updatedColor.body).toEqual({
               name: 'royal blue',
               _id: color.body._id
