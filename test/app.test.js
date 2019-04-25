@@ -86,24 +86,34 @@ describe('color routes', () => {
             blue:30 });
       });
   });
-  // it('can delete a color by id', ()=>{
-  //   return request(app)
-  //     .post('/api/v1/colors')
-  //     .send({
-  //       name:'test post',
-  //       hex:'my favorite hex',
-  //       red:10,
-  //       green:20,
-  //       blue:30
-  //     })
-  //     .then(createdColor=>{
-  //       const colorId = createdColor.body.colorId;
-  //       return request(app)
-  //         .delete(`api/v1/colors/${colorId}`);
-  //     })
-  //     .then(found=>{
-  //       expect(found).toHaveLength(0);
-  //     });
+  it('can delete a color by id', ()=>{
+    return request(app)
+      .post('/api/v1/colors')
+      .send({
+        name:'test post',
+        hex:'my favorite hex',
+        red:10,
+        green:20,
+        blue:30
+      })
+      .then(createdColor=>{
+        const colorId = createdColor.body._id;
+        console.log('colorId', colorId);
+        return request(app)
+          .delete(`/api/v1/colors/${colorId}`);
+      })
+      .then(deleted=>{
+        expect(deleted.body).toEqual(
+          { _id:expect.any(String),
+            __v:0,
+            name:'test post',
+            hex:'my favorite hex',
+            red:10,
+            green:20,
+            blue:30 });
+      });
+  });
+ 
 
-  // });
+  
 });
