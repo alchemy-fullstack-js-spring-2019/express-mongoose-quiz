@@ -35,8 +35,13 @@ describe('color routes', () => {
           red: 255,
           green: 255,
           blue: 255,
-          _id: expect.any(String)
+          _id: expect.any(String),
+          __v: 0
         });
       });
   });
+
+  // it('can get a list of colors', () => {
+
+  // })
 });
