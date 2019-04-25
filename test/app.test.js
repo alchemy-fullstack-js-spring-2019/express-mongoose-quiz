@@ -87,4 +87,33 @@ describe('color routes', () => {
         });
       });
   });
+
+  it('patches a color', () => {
+    return request(app)
+      .post('/api/v1/colors')
+      .send({
+        name: 'Fierce Tan',
+        hex: 'D2B48C',
+        red: 210,
+        green: 180,
+        blue: 140
+      })
+      .then(createdColor => {
+        return request(app)
+          .patch(`/api/v1/colors/${createdColor.body._id}`)
+          .send({
+            name: 'Robust Fern',
+            hex: 'D2B48C',
+            red: 100,
+            green: 180,
+            blue: 120
+          });
+      })
+      .then(updatedColor => {
+        expect(updatedColor.body).toEqual({
+          name: 'Robust Fern',
+          _id: expect.any(String)
+        });
+      });
+  });
 });
