@@ -57,4 +57,22 @@ describe('color routes', () => {
         }]);
       });
   });
+
+  it('can get a color by id', () => {
+    return Color.create(newColor)
+      .then(createdColor => {
+        return request(app)
+          .get(`/api/v1/colors/${createdColor._id}`);
+      })
+      .then(res => {
+        expect(res.body).toEqual({
+          name: 'magenta',
+          hex: 'ahex',
+          red: 55,
+          green: 45,
+          blue: 100,
+          _id: expect.any(String),
+        });
+      });
+  });
 });
