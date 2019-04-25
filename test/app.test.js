@@ -94,7 +94,10 @@ describe('color routes', () => {
           .send({ name: 'Definitely Purple' });
       })
       .then(res => {
-        expect(res.body).toEqual('');
+        expect(res.body).toEqual({
+          _id: expect.any(String),
+          name: 'Definitely Purple'
+        });
       });
   });
 });
