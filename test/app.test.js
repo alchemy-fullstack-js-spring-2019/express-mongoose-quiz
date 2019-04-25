@@ -86,6 +86,34 @@ describe('color routes', () => {
             blue:30 });
       });
   });
+  it('can patch a color', ()=>{
+    return request(app)
+      .post('/api/v1/colors')
+      .send({
+        name:'test post',
+        hex:'my favorite hex',
+        red:10,
+        green:20,
+        blue:30
+      })
+      .then(createdColor=>{
+        const colorId = createdColor.body._id;
+        return request(app)
+          .patch(`/api/v1/colors/${colorId}`)
+          .send({ name:'bettername' })
+          .then(updated=>{
+            expect(updated.body).toEqual(
+              { _id:expect.any(String),
+                __v:0,
+                name:'better name',
+                hex:'my favorite hex',
+                red:10,
+                green:20,
+                blue:30 });
+          });
+      });
+  
+  });
   it('can delete a color by id', ()=>{
     return request(app)
       .post('/api/v1/colors')
