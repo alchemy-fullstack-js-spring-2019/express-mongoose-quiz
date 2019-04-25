@@ -79,4 +79,17 @@ describe('color routes', () => {
       });
   });
 
+  it('get color by id', () => {
+    return Color.create(obj)
+      .then(color => {
+        return request(app)
+          .delete(`/api/v1/colors/${color._id}`);
+      })
+      .then(res => {
+        expect(res.body).toEqual({
+          _id: expect.any(String)
+        });
+      });
+  });
+
 });
