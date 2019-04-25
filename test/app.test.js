@@ -104,7 +104,30 @@ describe('color routes', () => {
             });
           });
       });
+  });
 
+  it('updates a color name', () => {
+    return request(app)
+      .post('/api/v1/colors')
+      .send({
+        name: 'blue',
+        hex: '#0000FF',
+        red: 0,
+        green: 0,
+        blue: 255
+      })
+      .then(color => {
+        return request(app)
+          .patch(`/api/v1/colors/${color.body._id}`)
+          .send({ name: 'royal blue' })
+          .then(updatedColor => {
+            console.log('updated color', updatedColor.body);
+            expect(updatedColor.body).toEqual({
+              name: 'royal blue',
+              _id: color.body._id
+            });
+          });
+      });
   });
 
 
