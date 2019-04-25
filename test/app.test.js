@@ -22,9 +22,9 @@ describe('color routes', () => {
     return mongoose.connection.close();
   });
 
-  it('can create a new beautiful color', () => {
+  it.only('can create a new beautiful color', () => {
     return request(app)
-      .post('/color')
+      .post('/api/v1/colors')
       .send({ name: 'lavender', hex: '967bb6', red: 59, green: 48, blue: 71 })
       .then(res => {
         expect(res.body).toEqual({
@@ -39,20 +39,13 @@ describe('color routes', () => {
       });
   });
   it('gets a list of colors', () => {
-    return Color
-      .create({
-        name: 'lavender',
-        hex: '967bb6',
-        red: 59,
-        green: 48,
-        blue: 71,
-        _id: expect.any(String),
-        __v: 0
+    return Color()
+      .then(() => {
+        return request(app)
+          .get('/api/v1/colors');
+      })
+      .then(color => {
+        expect(color.body).toHaveLength(1);
       });
-  })
-  .then(createdColor => {
-    return request(app)
-    
-  })
-  
+  }); 
 });
