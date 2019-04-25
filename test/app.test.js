@@ -111,4 +111,22 @@ describe('color routes', () => {
         });
       });
   });
+
+  it('can get a color by id', () => {
+    return request(app)
+      .post('/api/v1/colors')
+      .send({
+        name: 'Yellow',
+        hex: '#FFFF00',
+        r: 255,
+        g: 255,
+        b: 0
+      })
+      .then(res => request(app).delete(`/api/v1/colors/${res.body._id}`))
+      .then(res => {
+        expect(res.body).toEqual({
+          _id: expect.any(String),
+        });
+      });
+  });
 });
