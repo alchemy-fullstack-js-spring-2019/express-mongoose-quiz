@@ -66,4 +66,16 @@ describe('color routes', () => {
       });
     });
   });
+
+  it('can get a color by id', () => {
+
+  });
+
+  it('can update color by id', () => {
+
+  });
+
+  it('can delete color by id', () => {
+
+  });
 });
