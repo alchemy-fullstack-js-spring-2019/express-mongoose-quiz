@@ -50,4 +50,18 @@ describe('color routes', () => {
       });
   });
 
+  it('get color by id', () => {
+    return Color.create(obj)
+      .then(color => {
+        return request(app)
+          .get(`/api/v1/colors/${color._id}`);
+      })
+      .then(res => {
+        expect(res.body).toEqual({
+          ...obj,
+          _id: expect.any(String)
+        });
+      });
+  });
+
 });
