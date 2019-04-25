@@ -59,4 +59,32 @@ describe('color routes', () => {
           });
       });
   });
+
+  it('gets a color by id', () => {
+    return request(app)
+      .post('/api/v1/colors')
+      .send({
+        name: 'red',
+        hex: 'ff0000',
+        red: 255,
+        green: 0,
+        blue: 0
+      })
+      .then(color => {
+        return request(app)
+          .get(`/api/v1/colors/${color.body._id}`)
+          .then(returnedColor => {
+            expect(returnedColor.body).toEqual({
+              __v: 0,
+              _id: color.body._id,
+              name: 'red',
+              hex: 'ff0000',
+              red: 255,
+              green: 0,
+              blue: 0
+            });
+          });
+  
+      });
+  });
 });
