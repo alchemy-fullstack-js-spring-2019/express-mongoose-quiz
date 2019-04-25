@@ -106,4 +106,23 @@ describe('color routes', () => {
         });
       });
   });
+
+  it('deletes by id', () => {
+    return Color.create({
+      name: 'Blue',
+      hex: '#4286f4',
+      red: 66,
+      green: 134, 
+      blue: 244
+    })
+      .then(createdColor => {
+        return request(app)
+          .delete(`/api/v1/colors/${createdColor._id}`)
+      })
+      .then(res => {
+        expect(res.body).toEqual({
+          _id: expect.any(String)
+        });
+      });
+  });
 });
