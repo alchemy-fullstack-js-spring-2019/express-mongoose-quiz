@@ -97,5 +97,29 @@ describe('color routes', () => {
       });
   });
 
-  
+  it('updates a color', () => {
+    return Color
+      .create({
+        name: 'white',
+        hex: '000000',
+        red: 255,
+        green: 255,
+        blue: 255
+      })
+      .then(createdColor => {
+        return request(app)
+          .patch(`/api/v1/colors/${createdColor._id}`)
+          .send({ hex: 'FFFFFF' })
+          .then(res => {
+            expect(res.body).toEqual({
+              name: 'white',
+              hex: 'FFFFFF',
+              red: 255,
+              green: 255,
+              blue: 255,
+              _id: createdColor._id.toString()
+            });
+          });
+      });
+  });
 });
