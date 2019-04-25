@@ -71,12 +71,18 @@ describe('color routes', () => {
     return request(app)
       .get('/api/v1/colors')
       .then(res => {
-        const color = res.body[0];
         return request(app)
-          .get(`/api/v1/colors/${color._id}`)
+          .get(`/api/v1/colors/${res.body[0]._id}`);
       })
       .then(res => {
-        expect(res.body).toEqual('')
+        expect(res.body).toEqual({
+          _id: expect.any(String),
+          hex: expect.any(String),
+          name: expect.any(String),
+          red: expect.any(Number),
+          green: expect.any(Number),
+          blue: expect.any(Number)
+        });
       });
       
   });
