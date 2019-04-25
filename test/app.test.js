@@ -116,4 +116,25 @@ describe('color routes', () => {
         });
       });
   });
+
+  it('deletes a color but theres never a good reason to delete a color FYI', () => {
+    return request(app)
+      .post('/api/v1/colors')
+      .send({
+        name: 'Fierce Tan',
+        hex: 'D2B48C',
+        red: 210,
+        green: 180,
+        blue: 140
+      })
+      .then(createdColor => {
+        return request(app)
+          .delete(`/api/v1/colors/${createdColor.body._id}`)
+          .then(deletedColor => {
+            expect(deletedColor.body).toEqual({
+              _id: expect.any(String)
+            });
+          });
+      });
+  });
 });
