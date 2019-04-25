@@ -28,12 +28,14 @@ describe('color routes', () => {
         blue: 3
       })
       .then(color => {
-        expect(color).toEqual({
+        expect(color.body).toEqual({
           name: 'test',
           hex: 'abc',
           red: 1,
           green: 2,
-          blue: 3
+          blue: 3,
+          __v: 0,
+          _id: expect.any(String)
         });
       });
   });
