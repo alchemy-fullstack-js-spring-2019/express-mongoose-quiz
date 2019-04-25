@@ -75,7 +75,6 @@ describe('color routes', () => {
           .get(`/api/v1/colors/${color.body._id}`)
           .then(returnedColor => {
             expect(returnedColor.body).toEqual({
-              __v: 0,
               _id: color.body._id,
               name: 'red',
               hex: 'ff0000',
@@ -85,6 +84,64 @@ describe('color routes', () => {
             });
           });
   
+      });
+  });
+
+  it('updates a color', () => {
+    return request(app)
+      .post('/api/v1/colors')
+      .send({
+        name: 'red',
+        hex: 'ff0000',
+        red: 255,
+        green: 0,
+        blue: 0
+      })
+      .then(color => {
+        return request(app)
+          .patch(`/api/v1/colors/${color.body._id}`)
+          .send({
+            name: 'blue',
+            hex: '00ff00',
+            red: 0,
+            green: 0,
+            blue: 255
+          });
+      })
+      .then(updatedColor => {
+        expect(updatedColor.body).toEqual({
+          _id: expect.any(String),
+          name: 'blue',
+          hex: '00ff00',
+          red: 0,
+          green: 0,
+          blue: 255 
+        });
+      });
+  });
+
+  it('can delete a color', () => {
+    return request(app)
+      .post('/api/v1/colors')
+      .send({
+        name: 'red',
+        hex: 'ff0000',
+        red: 255,
+        green: 0,
+        blue: 0
+      })
+      .then(color => {
+        console.log(color.body._id);
+        return Promise.all([
+          Promise.resolve(color.body._id.toString()),
+          request(app)
+            .delete(`/api/v1/colors/${color.body._id}`)
+        ]);
+      })
+      .then(([_id, res]) => {
+        expect(res.body).toEqual({
+          _id
+        });
       });
   });
 });
