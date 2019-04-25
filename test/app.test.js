@@ -17,5 +17,27 @@ describe('color routes', () => {
     return mongoose.connection.close();
   });
 
-  it('add your tests', () => { });
+  it('creates a color', () => {
+    return request(app)
+      .post('/api/v1/colors')
+      .send({
+        name: 'Fierce Tan',
+        hex: 'D2B48C',
+        red: 210,
+        green: 180,
+        blue: 140
+      })
+      .then(createdColor => {
+        expect(createdColor.body).toEqual({
+          name: 'Fierce Tan',
+          hex: 'D2B48C',
+          red: 210,
+          green: 180,
+          blue: 140,
+          __v: 0,
+          _id: expect.any(String)
+        });
+      });
+
+  });
 });
