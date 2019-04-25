@@ -130,5 +130,28 @@ describe('color routes', () => {
       });
   });
 
+  it('deletes a color', () => {
+    return request(app)
+      .post('/api/v1/colors')
+      .send({
+        name: 'blue',
+        hex: '#0000FF',
+        red: 0,
+        green: 0,
+        blue: 255
+      })
+      .then(color => {
+        return request(app)
+          .delete(`/api/v1/colors/${color.body._id}`)
+          .then(deletedColor => {
+            expect(deletedColor.body).toEqual({
+              _id: color.body._id
+            });
+          });
+      });
+
+
+  });
+
 
 });
