@@ -17,5 +17,24 @@ describe('color routes', () => {
     return mongoose.connection.close();
   });
 
-  it('add your tests', () => { });
+  const colorDummy = {
+    name: 'clay',
+    hex: '#90392A',
+    red: 144,
+    green: 57,
+    blue: 42
+  };
+
+  it('POSTs a new color', () => {
+    return request(app)
+      .post('/api/v1/colors')
+      .send(colorDummy)
+      .then(res => {
+        expect(res.body).toEqual({
+          ...colorDummy,
+          _id: expect.any(String),
+          __v: 0
+        });
+      });
+  });
 });
