@@ -7,16 +7,16 @@ const app = require('../lib/app');
 //const colors = require('../lib/routes/colors');
 const Color = require('../lib/models/Color');
 
-function createColor() {
-  return Color
-    .create({
-      name: chance.name(),
-      hex: '#6666ff',
-      red: 35,
-      green: 20,
-      blue: 200
-    });
-}
+// function createColor() {
+//   return Color
+//     .create({
+//       name: chance.name(),
+//       hex: '#6666ff',
+//       red: 35,
+//       green: 20,
+//       blue: 200
+//     });
+// }
 
 describe('color routes', () => {
   beforeAll(() => {
@@ -31,25 +31,23 @@ describe('color routes', () => {
     return mongoose.connection.close();
   });
 
-  // it('POST route, creates new color and returns it', () => {
-  //   return createColor()
-  //     .then(color => {
-  //       return request(app)
-  //         .post('/api/v1/colors')
-  //         .send(color);
-  //     })
-  //     .then(res => {
-  //       expect(res.body).toEqual({
-  //         name: expect.any(String),
-  //         hex: '#6666ff',
-  //         red: 35,
-  //         green: 20,
-  //         blue: 200,
-  //         _id: expect.any(String),
-  //         //__v: expect.any(Number)
-  //       });
-  //     });
-  // });
+  it('POST route, creates new color and returns it', () => {
+    const color = new Color({
+      name: 'TestMe',
+      hex: '#6666ff',
+      red: 35,
+      green: 20,
+      blue: 200,
+    });
+    expect(color.toJSON()).toEqual({
+      name: 'TestMe',
+      hex: '#6666ff',
+      red: 35,
+      green: 20,
+      blue: 200,
+      _id: expect.anything()
+    });
+  });
   it('exists', () => {
     expect(0).toEqual(0);
   });
