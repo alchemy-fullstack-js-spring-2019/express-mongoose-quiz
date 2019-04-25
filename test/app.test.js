@@ -100,7 +100,7 @@ describe('color routes', () => {
           .send({ name: 'sweet name' });
       })
       .then(updatedColor => {
-        expect(updatedColor).toEqual({
+        expect(updatedColor.body).toEqual({
           name: 'sweet name',
           _id: expect.any(String)
         });
@@ -121,7 +121,7 @@ describe('color routes', () => {
           .delete(`/api/v1/colors/${newColor._id}`);
       })
       .then(deletedColor => {
-        expect(deletedColor).toEqual({
+        expect(deletedColor.body).toEqual({
           _id: expect.any(String)
         });
       });
