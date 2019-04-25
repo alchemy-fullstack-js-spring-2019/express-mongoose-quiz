@@ -100,7 +100,7 @@ describe('color routes', () => {
         const colorId = createdColor.body._id;
         return request(app)
           .patch(`/api/v1/colors/${colorId}`)
-          .send({ name:'bettername' })
+          .send({ name:'better name' })
           .then(updated=>{
             expect(updated.body).toEqual(
               { _id:expect.any(String),
