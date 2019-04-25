@@ -81,5 +81,28 @@ describe('color routes', () => {
         });
       });
   });
+  it('updates a colors name', () => {
+    return ColorSchema
+      .create({
+        name: 'majenta',
+        hex: '88943',
+        red: 200,
+        green: 20,
+        blue: 60
+      })
+      .then(createdColor => {
+        return request(app)
+          .patch(`/api/v1/colors/${createdColor._id}`)
+          .send({
+            name: 'notMajenta'
+          });
+      })
+      .then(res => {
+        expect(res.body).toEqual({
+          name: 'notMajenta',
+          _id: expect.any(String)
+        });
+      });
+  });
 });
 
