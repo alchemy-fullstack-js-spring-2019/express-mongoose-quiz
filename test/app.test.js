@@ -60,4 +60,27 @@ describe('color routes', () => {
         });
       });
   });
+
+  it('can find a color by the id', () => {
+    return request(app)
+      .post('/api/v1/colors')
+      .send({
+        name: 'Red',
+        hex: '#FF0000',
+        red: 255,
+        green: 0,
+        blue: 0
+      })
+      .then(res => request(app).get(`/api/v1/colors/${res.body._id}`))
+      .then(res => {
+        expect(res.body).toEqual({
+          name: 'Red',
+          hex: '#FF0000',
+          red: 255,
+          green: 0,
+          blue: 0,
+          _id: expect.any(String)
+        });
+      });
+  });
 });
