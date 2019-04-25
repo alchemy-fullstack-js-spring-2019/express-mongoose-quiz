@@ -63,5 +63,24 @@ describe('color routes', () => {
         });
       });
   });
+  
+  it('update color by id', () => {
+    return Color.create(obj)
+      .then(color => {
+        return request(app)
+          .patch(`/api/v1/colors/${color._id}`)
+          .send({ name: 'black' });
+      })
+      .then(res => {
+        expect(res.body).toEqual({
+          blue: 5,
+          green: 5,
+          hex: '333',
+          name: 'black',
+          red: 5,
+          _id: expect.any(String)
+        });
+      });
+  });
 
 });
