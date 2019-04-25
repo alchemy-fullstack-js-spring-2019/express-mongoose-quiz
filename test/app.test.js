@@ -66,4 +66,30 @@ describe('color routes', () => {
         });
       });
   });
+
+  it('gets color by id', () => {
+    return request(app)
+      .post('/api/v1/colors')
+      .send({
+        name: 'jaredsPersonalColor',
+        hex: '#E018BC',
+        red: 224,
+        green: 24,
+        blue: 188
+      })
+      .then(color => {
+        return request(app)
+          .get(`/api/v1/colors/${color.body._id}`);
+      })
+      .then(res => {
+        expect(res.body).toEqual({
+          name: 'jaredsPersonalColor',
+          hex: '#E018BC',
+          red: 224,
+          green: 24,
+          blue: 188,
+          _id: expect.any(String)
+        });
+      });
+  });
 });
