@@ -100,4 +100,17 @@ describe('color routes', () => {
         });
       });
   });
+  it('can DELETE a color by ID', () => {
+    return request(app)
+      .get('/api/v1/colors')
+      .then(res => {
+        return request(app)
+          .delete(`/api/v1/colors/${res.body[0]._id}`);
+      })
+      .then(res => {
+        expect(res.body).toEqual({
+          _id: expect.any(String)
+        });
+      });
+  });
 });
