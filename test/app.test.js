@@ -24,17 +24,21 @@ describe('color routes', () => {
       .send({
         name: 'color1',
         hex: '444444',
-        red: '22',
-        blue: '22',
-        green: '22'
+        blue: 22,
+        red: 22,
+        green: 22
+
+
       })
       .then(res => {
         expect(res.body).toEqual({
           name: 'color1',
           hex: '444444',
-          red: '22',
-          blue: '22',
-          green: '22'
+          red: 22,
+          blue: 22,
+          green: 22,
+          __v: 0,
+          _id: expect.any(String)
         });
       });
   });
