@@ -100,8 +100,8 @@ describe('color routes', () => {
   it('updates a color', () => {
     return Color
       .create({
-        name: 'white',
-        hex: '000000',
+        name: 'black',
+        hex: 'FFFFFF',
         red: 255,
         green: 255,
         blue: 255
@@ -109,17 +109,33 @@ describe('color routes', () => {
       .then(createdColor => {
         return request(app)
           .patch(`/api/v1/colors/${createdColor._id}`)
-          .send({ hex: 'FFFFFF' })
+          .send({ name: 'white' })
           .then(res => {
             expect(res.body).toEqual({
               name: 'white',
-              hex: 'FFFFFF',
-              red: 255,
-              green: 255,
-              blue: 255,
               _id: createdColor._id.toString()
             });
           });
       });
   });
+
+  it('deletes a color', () => {
+    return Color
+      .create({
+        name: 'black',
+        hex: '000000',
+        red: 0,
+        green: 0,
+        blue: 0
+      })
+      .then(createdColor => {
+        return request(app)
+          .delete(`/api/v1/colors/${createdColor._id}`)
+          .then(res => {
+            expect(res.body).toEqual({
+              _id: createdColor._id.toString()
+            });
+          });
+      });
+  }); 
 });
