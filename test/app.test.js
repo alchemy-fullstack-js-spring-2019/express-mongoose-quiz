@@ -17,5 +17,28 @@ describe('color routes', () => {
     return mongoose.connection.close();
   });
 
-  it('add your tests', () => { });
+  it('can create a color', () => { 
+    return request(app)
+      .post('/api/v1/colors')
+      .send({
+        name: 'chartreuse',
+        hexValue: '#7fff00',
+        red: 25,
+        green: 115,
+        blue: 130
+      })
+      .then(res => {
+        expect(res.body).toEqual({
+          _id: expect.any(String),
+          name: 'chartreuse',
+          hexValue: '#7fff00',
+          red: 25,
+          green: 115,
+          blue: 130,
+          __v: 0
+        
+        });
+      });
+  });
 });
+
