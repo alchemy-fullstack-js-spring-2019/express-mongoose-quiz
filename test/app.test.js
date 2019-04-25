@@ -75,4 +75,18 @@ describe('color routes', () => {
         });
       });
   });
+  it('can update a color name', () => {
+    return Color.create(newColor)
+      .then(createdColor => {
+        return request(app)
+          .patch(`/api/v1/colors/${createdColor._id}`)
+          .send({ name: 'purple' });
+      })
+      .then(res => {
+        expect(res.body).toEqual({
+          name: 'purple',
+          _id: expect.any(String)
+        });
+      });
+  });
 });
