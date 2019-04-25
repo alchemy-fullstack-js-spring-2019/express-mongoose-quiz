@@ -17,16 +17,6 @@ describe('color routes', () => {
     return mongoose.connection.close();
   });
 
-  const createColor = () => {
-    return Color.create({ 
-      name: 'purple',
-      hex: '#ce42f4',
-      red: 206,
-      green: 66,
-      blue: 244
-    })
-  };
-
   it('POSTs/creates a new color', () => { 
     return request(app)
       .post('/api/v1/colors')
