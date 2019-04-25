@@ -64,9 +64,37 @@ describe('color routes', () => {
           .get('/api/v1/colors')
           .then(res => {
             expect(res.body).toHaveLength(2);
+            expect(res.body[1]).toEqual({
+              _id: expect.any(String),
+              name: 'white'
+            });
           });
       });
   });
 
-  it('')
+  it('gets a color by id', () => {
+    return Color
+      .create({
+        name: 'black',
+        hex: '000000',
+        red: 0,
+        green: 0,
+        blue: 0
+      })
+      .then(createdColor => {
+        return request(app)
+          .get(`/api/v1/colors/${createdColor._id}`)
+          .then(res => {
+            expect(res.body).toEqual({
+              name: 'black',
+              hex: '000000',
+              red: 0,
+              green: 0,
+              blue: 0,
+              _id: expect.any(String)
+            });
+          });
+      });
+
+  });
 });
