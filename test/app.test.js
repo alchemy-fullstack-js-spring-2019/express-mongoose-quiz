@@ -28,7 +28,7 @@ describe('color routes', () => {
     })
       .then(color => {
         return request(app)
-          .post('/colors')
+          .post('/api/v1/colors')
           .send({
             name: color.name,
             hex: color.hex,
