@@ -109,7 +109,6 @@ describe('color routes', () => {
           });
       })
       .then(updatedColor => {
-        console.log(updatedColor.body);
         expect(updatedColor.body).toEqual({
           _id: expect.any(String),
           name: 'even redder red',
