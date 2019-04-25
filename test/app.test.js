@@ -61,4 +61,28 @@ describe('color routes', () => {
         }]);
       });
   });
+
+  it('can get a color by id', () => {
+    return Color.create({
+      name: 'fancy',
+      hex: '123FFF',
+      red: 5,
+      green: 100,
+      blue: 250
+    })
+      .then(color => {
+        return request(app)
+          .get(`/api/v1/colors/${color._id}`);
+      })
+      .then(res => {
+        expect(res.body).toEqual({
+          name: 'fancy',
+          hex: '123FFF',
+          red: 5,
+          green: 100,
+          blue: 250,
+          _id: expect.any(String)
+        });
+      });
+  });
 });
