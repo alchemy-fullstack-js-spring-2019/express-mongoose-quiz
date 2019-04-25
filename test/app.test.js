@@ -77,11 +77,11 @@ describe('color routes', () => {
       .then(res => {
         expect(res.body).toEqual({
           _id: expect.any(String),
-          hex: expect.any(String),
-          name: expect.any(String),
-          red: expect.any(Number),
-          green: expect.any(Number),
-          blue: expect.any(Number)
+          name: 'Probably Purple',
+          hex: '462759',
+          red: 70,
+          green: 39,
+          blue: 89
         });
       }); 
   });
