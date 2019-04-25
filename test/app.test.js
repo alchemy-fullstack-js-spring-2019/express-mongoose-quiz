@@ -104,12 +104,15 @@ describe('color routes', () => {
     return request(app)
       .get('/api/v1/colors')
       .then(res => {
-        return request(app)
-          .delete(`/api/v1/colors/${res.body[0]._id}`);
+        return Promise.all([
+          Promise.resolve(res.body[0]),
+          request(app)
+            .delete(`/api/v1/colors/${res.body[0]._id}`)
+        ]);
       })
-      .then(res => {
+      .then(([color, res]) => {
         expect(res.body).toEqual({
-          _id: expect.any(String)
+          _id: color._id
         });
       });
   });
