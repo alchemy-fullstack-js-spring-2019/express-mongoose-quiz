@@ -44,8 +44,8 @@ describe('color routes', () => {
     return request(app)
       .post('/api/v1/colors')
       .send({
-        name: 'test',
-        hex: 'abc',
+        name: 'test2',
+        hex: 'xyz',
         red: 3,
         green: 5,
         blue: 1
@@ -55,6 +55,31 @@ describe('color routes', () => {
           .get('/api/v1/colors')
           .then(resList => {
             expect(resList.body).toHaveLength(1);
+          });
+      });
+  });
+  it('gets a single color', () => {
+    return request(app)
+      .post('/api/v1/colors')
+      .send({
+        name: 'test3',
+        hex: 'def',
+        red: 1,
+        green: 1,
+        blue: 1
+      })
+      .then(created => {
+        return request(app)
+          .get(`/api/v1/colors/${created.body._id}`)
+          .then(res => {
+            expect(res.body).toEqual({
+              name: 'test3',
+              hex: 'def',
+              red: 1,
+              green: 1,
+              blue: 1,
+              _id: expect.any(String)
+            });
           });
       });
   });
