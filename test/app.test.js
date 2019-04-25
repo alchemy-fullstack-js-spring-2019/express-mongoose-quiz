@@ -66,4 +66,18 @@ describe('color routes', () => {
         expect(res.body).toHaveLength(2);
       });
   });
+
+  it('can GET a single color by ID', () => {
+    return request(app)
+      .get('/api/v1/colors')
+      .then(res => {
+        const color = res.body[0];
+        return request(app)
+          .get(`/api/v1/colors/${color._id}`)
+      })
+      .then(res => {
+        expect(res.body).toEqual('')
+      });
+      
+  });
 });
