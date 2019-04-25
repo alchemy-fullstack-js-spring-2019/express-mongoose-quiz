@@ -93,4 +93,27 @@ describe('color routes', () => {
         });
       });
   });
+  it('can update a color by id', () => {
+    return Color
+      .create({
+        name: 'mint magic',
+        hex: '#54e5d4',
+        red: 84,
+        green: 229,
+        blue: 212
+      })
+      .then(createdColor => {
+        return request(app)
+          .patch(`/api/v1/colors/${createdColor._id}`)
+          .send({
+            name: 'the mintiest'
+          });
+      })
+      .then(res => {
+        expect(res.body).toEqual({
+          name: 'the mintiest',
+          _id: expect.any(String)
+        });
+      });
+  });
 });
