@@ -3,6 +3,7 @@ const mongoose = require('mongoose');
 const request = require('supertest');
 const connect = require('../lib/utils/connect');
 const app = require('../lib/app');
+const Color = require('../lib/models/Color');
 
 describe('color routes', () => {
   beforeAll(() => {
@@ -39,6 +40,21 @@ describe('color routes', () => {
           _id: expect.any(String),
           __v: 0
         });
+      });
+  });
+  
+  it('can get a list of all colors', () => {
+    return Color.create(newColor)
+      .then(() => {
+        return request(app)
+          .get('/api/v1/colors');
+      })
+      .then(res => {
+        expect(res.body).toHaveLength(1);
+        expect(res.body).toEqual([{
+          name: 'magenta',
+          _id: expect.any(String)
+        }]);
       });
   });
 });
