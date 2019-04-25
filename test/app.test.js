@@ -84,5 +84,35 @@ describe('color routes', () => {
       });
   });
 
-
+  it('can patch only a color\'s name', () => {
+    return request(app)
+      .post('/api/v1/colors')
+      .send({
+        name: 'Green',
+        hex: '#0000FF',
+        r: 0,
+        g: 0,
+        b: 255
+      })
+      .then(res => request(app)
+        .post(`/api/v1/colors/${res.body._id}`)
+        .send({
+          name: 'Blue',
+          hex: '#00FF00',
+          r: 0,
+          g: 255,
+          b: 0
+        })
+      )
+      .then(res => {
+        expect(res.body).toEqual({
+          _id: expect.any(String),
+          name: 'Blue',
+          hex: '#0000FF',
+          r: 0,
+          g: 0,
+          b: 255
+        });
+      });
+  });
 });
