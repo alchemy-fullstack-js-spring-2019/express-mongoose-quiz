@@ -108,4 +108,22 @@ describe('color routes', () => {
         });
       });
   });
+
+  it('can delete a color by the id', () => {
+    return request(app)
+      .post('/api/v1/colors')
+      .send({
+        name: 'Red',
+        hex: '#FF0000',
+        red: 255,
+        green: 0,
+        blue: 0
+      })
+      .then(res => request(app).delete(`/api/v1/colors/${res.body._id}`))
+      .then(res => {
+        expect(res.body).toEqual({
+          _id: expect.any(String)
+        });
+      });
+  });
 });
