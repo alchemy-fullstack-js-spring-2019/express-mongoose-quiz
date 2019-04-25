@@ -59,4 +59,18 @@ describe('color routes', () => {
         expect(res.body).toHaveLength(1);
       });
   });
+
+  it('Gets a color by ID', () => {
+    return createColor()
+      .then(createdColor => {
+        return request(app)
+          .get(`/api/v1/colors/${createdColor._id}`);
+      })
+      .then(res => {
+        expect(res.body).toEqual({
+          ...colorDummy,
+          _id: expect.any(String)
+        });
+      });
+  });
 });
