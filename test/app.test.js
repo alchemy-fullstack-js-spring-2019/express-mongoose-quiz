@@ -87,7 +87,7 @@ describe('color routes', () => {
       });
   });
 
-  it('updates a color', () => {
+  it.only('updates a color', () => {
     return request(app)
       .post('/api/v1/colors')
       .send({
@@ -101,21 +101,21 @@ describe('color routes', () => {
         return request(app)
           .patch(`/api/v1/colors/${color.body._id}`)
           .send({
-            name: 'blue',
-            hex: '00ff00',
-            red: 0,
+            name: 'even redder red',
+            hex: 'ff0000',
+            red: 255,
             green: 0,
-            blue: 255
+            blue: 0 
           });
       })
       .then(updatedColor => {
         expect(updatedColor.body).toEqual({
           _id: expect.any(String),
-          name: 'blue',
-          hex: '00ff00',
-          red: 0,
+          name: 'even redder red',
+          hex: 'ff0000',
+          red: 255,
           green: 0,
-          blue: 255 
+          blue: 0 
         });
       });
   });
