@@ -3,6 +3,7 @@ const mongoose = require('mongoose');
 const request = require('supertest');
 const connect = require('../lib/utils/connect');
 const app = require('../lib/app');
+const ColorSchema = require('../lib/models/Color.js');
 
 describe('color routes', () => {
   beforeAll(() => {
@@ -39,4 +40,22 @@ describe('color routes', () => {
         });
       });
   });
+  it('gets a list of all the colors in the db', () => {
+    return ColorSchema
+      .create({
+        name: 'majenta',
+        hex: '88943',
+        red: 200,
+        green: 20,
+        blue: 60
+      })
+      .then(() => {
+        return request(app)
+          .get('/api/v1/colors');
+      })
+      .then(res => {
+        expect(res.body).toHaveLength(1);
+      });
+  });
 });
+
