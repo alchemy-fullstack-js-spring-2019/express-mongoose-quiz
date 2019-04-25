@@ -49,34 +49,24 @@ describe('color routes', () => {
         green: 0,
         blue: 0
       })
-      .then(colorBlack => {
-        return Promise.all([
-          Promise.resolve(colorBlack),
-          Color
-            .create({
-              name: 'white',
-              hex: 'FFFFFF',
-              red: 255,
-              green: 255,
-              blue: 255
-            })
-        ]);
+      .then(() => {
+        return Color
+          .create({
+            name: 'white',
+            hex: 'FFFFFF',
+            red: 255,
+            green: 255,
+            blue: 255
+          });
       })
-      .then(([colorBlack, colorWhite]) => {
+      .then(() => {
         return request(app)
           .get('/api/v1/colors')
           .then(res => {
-            expect(res.body).toEqual([
-              {
-                id: expect.any(String),
-                name: 'black'
-              },
-              {
-                id: expect.any(String),
-                name: 'white'
-              }
-            ]);
+            expect(res.body).toHaveLength(2);
           });
       });
   });
+
+  it('')
 });
