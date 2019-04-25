@@ -73,4 +73,19 @@ describe('color routes', () => {
         });
       });
   });
+
+  it('Patches a color\'s name', () => {
+    return createColor()
+      .then(createdColor => {
+        return request(app)
+          .patch(`/api/v1/colors/${createdColor._id}`)
+          .send({ name: 'dust' });
+      })
+      .then(res => {
+        expect(res.body).toEqual({
+          name: 'dust',
+          _id: expect.any(String)
+        });
+      });
+  });
 });
