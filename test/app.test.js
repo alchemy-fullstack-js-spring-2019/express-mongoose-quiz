@@ -83,4 +83,26 @@ describe('color routes', () => {
           });
       });
   });
+  it('patches a color', () => {
+    return request(app)
+      .post('/api/v1/colors')
+      .send({
+        name: 'test3',
+        hex: 'def',
+        red: 1,
+        green: 1,
+        blue: 1
+      })
+      .then(created => {
+        return request(app)
+          .patch(`/api/v1/colors/${created.body._id}`)
+          .send({ name: 'dude' })
+          .then(res => {
+            expect(res.body).toEqual({
+              name: 'dude',
+              _id: expect.any(String)
+            });
+          });
+      });
+  });
 });
