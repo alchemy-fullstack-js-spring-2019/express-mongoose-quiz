@@ -83,7 +83,18 @@ describe('color routes', () => {
           green: expect.any(Number),
           blue: expect.any(Number)
         });
+      }); 
+  });
+  it('can PATCH a color name', () => {
+    return request(app)
+      .get('/api/v1/colors')
+      .then(res => {
+        return request(app)
+          .patch(`/api/v1/colors/${res.body[0]._id}`)
+          .send({ name: 'Definitely Purple' });
+      })
+      .then(res => {
+        expect(res.body).toEqual('');
       });
-      
   });
 });
