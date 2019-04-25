@@ -41,7 +41,29 @@ describe('color routes', () => {
       });
   });
 
-  // it('can get a list of colors', () => {
-
-  // })
+  it('can get a list of colors', () => {
+    return Color.create({
+      name: 'black',
+      hex: 'FFFFFF',
+      red: 255,
+      green: 255,
+      blue: 255
+    })
+    .then(() => {
+      return request(app)
+      .get('/colors');
+    })
+    .then(res => {
+      expect(res.body).toHaveLength(1);
+      expect(res.body).toEqual({
+        name: 'black',
+        hex: 'FFFFFF',
+        red: 255,
+        green: 255,
+        blue: 255,
+        _id: expect.any(String),
+        __v: 0
+      });
+    });
+  });
 });
