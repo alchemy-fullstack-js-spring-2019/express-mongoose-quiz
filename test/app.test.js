@@ -112,10 +112,6 @@ describe('color routes', () => {
         expect(updatedColor.body).toEqual({
           _id: expect.any(String),
           name: 'even redder red',
-          hex: 'ff0000',
-          red: 255,
-          green: 0,
-          blue: 0 
         });
       });
   });
