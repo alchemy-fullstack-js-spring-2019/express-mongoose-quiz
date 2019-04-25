@@ -25,7 +25,7 @@ describe('color routes', () => {
         hex: '#0000FF',
         red: 0,
         green: 0,
-        blue: 0
+        blue: 255
       })
       .then(res => {
         expect(res.body).toEqual({
@@ -33,10 +33,50 @@ describe('color routes', () => {
           hex: '#0000FF',
           red: 0,
           green: 0,
-          blue: 0,
+          blue: 255,
           _id: expect.any(String),
           __v: 0
         });
+      });
+  });
+
+  it('gets a list of colors', () => {
+    return request(app)
+      .post('/api/v1/colors')
+      .send({
+        name: 'blue',
+        hex: '#0000FF',
+        red: 0,
+        green: 0,
+        blue: 255
+      })
+      .then(() => {
+        return request(app)
+          .post('/api/v1/colors')
+          .send({
+            name: 'red',
+            hex: '#FF0000',
+            red: 255,
+            green: 0,
+            blue: 0
+          });
+      })
+      .then(() => {
+        return request(app)
+          .get('/api/v1/colors')
+          .then(res => {
+            expect(res.body).toHaveLength(2);
+            expect(res.body).toEqual([
+              {
+                name: 'blue',
+                _id: expect.any(String)
+              },
+              {
+                name: 'red',
+                _id: expect.any(String)
+              }
+            ]);
+          });
       });
   });
 
